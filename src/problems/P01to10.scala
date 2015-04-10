@@ -3,7 +3,7 @@ package problems
 /**
  * Created by cedricbastin on 10/04/15.
  */
-object Problems01to10 extends App {
+object P01to10 extends App {
   //problem 1
   def last[T](list:List[T]) = list.reverse.head //check for empty list
   assert(last(List(1, 1, 2, 3, 5, 8)) == 8)
