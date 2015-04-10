@@ -100,5 +100,48 @@ object Lists extends App {
   def removeAt[T](n:Int, list:List[T]):(List[T], T) = (list.take(n) ::: list.drop(n+1), list(n))
   assert(removeAt(1, List('a, 'b, 'c, 'd)) == (List('a, 'c, 'd),'b))
 
+  //problem 21
+  def insertAt[T](e:T, n:Int, list:List[T]):List[T] = list.take(n) ::: e :: list.drop(n)
+  assert(insertAt('new, 1, List('a, 'b, 'c, 'd)) == List('a, 'new, 'b, 'c, 'd))
+
+  //problem 22
+  def range(i:Int, j:Int) = List.range(i, j+1)
+  assert(range(4, 9) == List(4, 5, 6, 7, 8, 9))
+
+  val ran = new scala.util.Random()
+  //problem 23
+  def randomSelect[T](n:Int, list:List[T]):List[T] = {
+    if (n == 0) Nil
+    else {
+      val i = ran.nextInt(list.size)
+      list(i) :: randomSelect(n-1, list.take(i) ::: list.drop(i+1))
+    }
+  }
+  println(randomSelect(3, List('a, 'b, 'c, 'd, 'f, 'g, 'h)))
+
+  //problem 24
+  def lotto(i:Int, j:Int) = randomSelect(i, (for (n <- 1 to j) yield n).toList)
+  println(lotto(6, 49))
+
+  //problem 25
+  def randomPermute[T](list:List[T]):List[T] = randomSelect(list.size, list)
+  println(randomPermute(List('a, 'b, 'c, 'd, 'e, 'f)))
+
+  //problem 26
+  def combinations[T](ni:Int, listi:List[T]):List[List[T]] = {
+    def combRec(n:Int, stem:List[T], list:List[T]):List[List[T]] =
+      if (n == 0) List(stem)
+      else {
+        (for (e <- list) yield combRec(n-1, stem ::: List(e), list.filterNot(_ == e))).flatten
+      }
+    combRec(ni, Nil, listi)
+  }
+  combinations(3, List('a, 'b, 'c, 'd, 'e, 'f)).foreach(println(_))
+
+  //problem 27
+
+  //problem 28
+
+
   println("done Lists")
 }
